@@ -1,0 +1,19 @@
+{
+  "name": "js401n21lab1",
+  "version": "1.0.0",
+  "description": "https://canvas.instructure.com/courses/4898196/assignments/30604099",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidSouther/js401n21lab1.git"
+  },
+  "author": "David Souther",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DavidSouther/js401n21lab1/issues"
+  },
+  "homepage": "https://github.com/DavidSouther/js401n21lab1#readme"
+}
