@@ -11,11 +11,13 @@
 const supertest = require("supertest");
 const server = require("../server.js");
 
+const request = supertest(server.app);
+
 describe("Node Server", () => {
     it("says hello world", async () => {
         // set up the test so it can do a thing
         // Prepare the server
-        const request = supertest(server.app);
+        // (see above)
 
         // perform an action, that does the thing
         // request the / route
@@ -28,8 +30,6 @@ describe("Node Server", () => {
     });
 
     it("returns some data", async () => {
-        const request = supertest(server.app);
-
         const response = await request.get("/data");
 
         expect(response.status).toBe(200);
