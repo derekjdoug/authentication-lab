@@ -1,4 +1,5 @@
 const { logger } = require('../src/middleware/logger');
+const { validate } = require('../src/middleware/validator');
 
 describe('Middleware', () => {
   // Test that logger calls console.log
@@ -29,5 +30,27 @@ describe('Middleware', () => {
 
     // Assetion
     expect(next).toHaveBeenCalled();
+  });
+
+  describe('validator', () => {
+    it('passes with a name param', () => {
+      const req = { method: 'GET', url: '/', params: { name: 'David' } };
+      const res = {};
+      const next = jest.fn();
+
+      validate(req, res, next);
+
+      expect(next).toHaveBeenCalled();
+    });
+
+    it('fails without a name param', () => {
+      const req = { method: 'GET', url: '/', params: {} };
+      const res = {};
+      const next = jest.fn();
+
+      expect(() => {
+        validate(req, res, next);
+      }).toThrow();
+    });
   });
 });

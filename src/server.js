@@ -5,9 +5,13 @@ const { logger } = require('./middleware/logger');
 
 const { hello } = require('./handler/hello');
 const { data } = require('./handler/data');
+const { validate } = require('./middleware/validator');
+const { do404 } = require('./handler/404');
+const { do500 } = require('./handler/500');
+const { getPerson } = require('./handler/person');
 
-const makeError = (req, res) => {
-  throw new Error('This is the error handler!');
+const makeError = () => {
+  throw new Error('This is the error generator!');
 };
 
 const pet = (req, res) => {
@@ -21,7 +25,11 @@ app.use(logger);
 app.get('/', hello);
 app.get('/data', data);
 app.get('/throw-error', makeError);
-app.get('/pets/:name', pet);
+app.get('/pets/:name', validate, pet);
+app.get('/person/:name', validate, getPerson);
+
+app.use(do404);
+app.use(do500);
 
 // ---
 

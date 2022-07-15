@@ -56,4 +56,25 @@ describe('Node Server', () => {
     expect(response.status).toBe(200);
     expect(response.body.name).toMatch(/Pippin/);
   });
+
+  it('starts on a port', () => {
+    jest.spyOn(server.app, 'listen').mockImplementation();
+
+    server.start(3000);
+
+    expect(server.app.listen).toHaveBeenCalledWith(3000, expect.anything());
+  });
+
+  it('returns server errors', async () => {
+    let response = await request.get('/throw-error');
+
+    expect(response.status).toBe(500);
+    expect(response.text).toMatch(/This is the error generator!/);
+  });
+
+  it('returns 404 errors', async () => {
+    let response = await request.get('/missing-file');
+
+    expect(response.status).toBe(404);
+  });
 });
