@@ -1,9 +1,9 @@
-const { DataTypes } = require('sequelize/types');
+const sequelize = require('sequelize');
 
 function user(db) {
   return db.define('User', {
-    username: DataTypes.STRING,
-    birthday: DataTypes.DATE,
+    username: sequelize.DataTypes.STRING,
+    birthday: sequelize.DataTypes.DATE,
   });
 }
 

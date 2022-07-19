@@ -3,6 +3,9 @@ const { getPerson } = require('../src/handler/person');
 const { app } = require('../src/server');
 
 describe('API routes', () => {
+  beforeEach(async () => {
+    await db.sync();
+  });
   describe('person', () => {
     it('fills in a person', () => {
       const req = { method: 'GET', url: '/', params: { name: 'David' } };

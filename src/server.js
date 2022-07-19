@@ -3,8 +3,6 @@
 const express = require('express');
 const { logger } = require('./middleware/logger');
 
-require('./db');
-
 const { hello } = require('./handler/hello');
 const { data } = require('./handler/data');
 const { validate } = require('./middleware/validator');
@@ -12,7 +10,7 @@ const { do404 } = require('./handler/404');
 const { do500 } = require('./handler/500');
 const { getPerson } = require('./handler/person');
 const { createUser, listUsers, getUser } = require('./handler/user');
-const db = require('./db');
+const { db } = require('./db');
 
 const makeError = () => {
   throw new Error('This is the error generator!');
@@ -41,7 +39,7 @@ app.use(do404);
 app.use(do500);
 
 // ---
-shouldSyncOnStart = true;
+const shouldSyncOnStart = true;
 async function start(port) {
   if (shouldSyncOnStart /* todo define this somewhere */) {
     await db.sync();
