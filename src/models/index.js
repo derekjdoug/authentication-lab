@@ -1,7 +1,7 @@
 'use strict';
 
 require('dotenv').config();
-const DATABASE_URL = process.env.NODE_ENV === 'test' ? 'sqlite:memory:' : process.env.DATABASE_URL;
+const DATABASE_URL = process.env.NODE_ENV === 'test' ? 'sqlite::memory:' : process.env.DATABASE_URL;
 const { Sequelize, DataTypes } = require('sequelize');
 
 const Collection = require('./data-collection.js');
@@ -11,14 +11,29 @@ const recipeSchema = require('./recipe/model.js');
 const foodRecipeSchema = require('./foodRecipe/model.js');
 const userSchema = require('./users/model.js');
 
-const sequelizeOptions = process.env.NODE_ENV === 'production' ? {
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
-  },
-} : {};
+const baseOptions =
+  process.env.NODE_ENV === 'test'
+    ? {
+      logQueryParameters: true,
+      logging: (...args) => console.log(...args),
+    }
+    : {
+      logging: () => { },
+    };
+
+const sequelizeOptions = {
+  ...baseOptions,
+  ...(process.env.NODE_ENV === 'production'
+    ? {
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      },
+    }
+    : {}),
+};
 
 // turn schemas into Sequelize models
 const sequelize = new Sequelize(DATABASE_URL, sequelizeOptions);

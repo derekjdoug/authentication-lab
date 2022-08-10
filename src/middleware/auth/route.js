@@ -8,7 +8,9 @@ const router = express.Router();
 async function signUpUser(req, res) {
   try {
     let obj = req.body;
+    console.log(`This is the request body: ${obj}`);
     let newUsers = await Users.create(obj);
+    console.log(`newUsers: ${newUsers}`);
     res.status(200).json(newUsers);
   } catch (e) {
     res.status(500).send(`Sorry. Cannot create user ${req.body.username}`);
