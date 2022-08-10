@@ -7,11 +7,12 @@ const express = require('express');
 const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
 const logger = require('./middleware/logger.js');
-const authRoutes = require('./middleware/auth/route');
+const authRoutes = require('./middleware/auth/route.js');
 
 const foodRoutes = require('./routes/food.js');
 const clothesRoutes = require('./routes/clothes.js');
-const userRoutes = require('./routes/user');
+// const userRoutes = require('./routes/user');
+const validateToken = require('./middleware/auth/auth');
 
 const app = express();
 
@@ -21,11 +22,13 @@ app.use(express.json());
 // Our own Global Middleware
 app.use(logger);
 
+app.use(authRoutes);
+app.use(validateToken);
 // Use our routes from the routing module...
 app.use(foodRoutes);
 app.use(clothesRoutes);
-app.use(userRoutes);
-app.use(authRoutes);
+// Don't need to use the userRoutes, as the authRoutes now handle this with the userModel
+// app.use(userRoutes);
 
 
 // Our Error Handlers -- need to be the last things defined!
