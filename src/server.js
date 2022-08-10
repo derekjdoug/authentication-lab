@@ -27,6 +27,7 @@ app.use(validateToken);
 // Use our routes from the routing module...
 app.use(foodRoutes);
 app.use(clothesRoutes);
+// Don't need to use the userRoutes, as the authRoutes now handle this with the userModel
 // app.use(userRoutes);
 
 

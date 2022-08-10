@@ -1,6 +1,7 @@
 'use strict';
 
 require('dotenv').config();
+//If our env is test, use our local memory, if it isn't than use our database_url
 const DATABASE_URL = process.env.NODE_ENV === 'test' ? 'sqlite::memory:' : process.env.DATABASE_URL;
 const { Sequelize, DataTypes } = require('sequelize');
 
